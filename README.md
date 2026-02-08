@@ -1,6 +1,6 @@
 # TenSynth.jl
 
-**Compile quantum states and operators into quantum circuits using tensor networks.**
+**Compile quantum states and unitaries into quantum circuits using tensor networks.**
 
 - **Variational and analytical** circuit synthesis from Matrix Product States (MPS), Matrix Product Operators (MPO), and infinite MPS (iMPS)
 - **Targets both NISQ and fault-tolerant hardware** — native parameterized gates or Clifford+T decomposition
