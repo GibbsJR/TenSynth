@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Julia
+Manifest.toml
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+deps/build.log
+
+# IDE
+.vscode/
+.idea/
