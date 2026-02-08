@@ -34,7 +34,7 @@ graph TD
 <p align="center">
   <img src="assets/imps_error_vs_rzz.png" width="420" alt="iMPS error vs RZZ gates per bond"/>
   &nbsp;&nbsp;
-  <img src="assets/imps_error_vs_tgates.png" width="420" alt="iMPS error vs T-gate count"/>
+  <img src="assets/imps_error_vs_tgates.png" width="420" alt="iMPS error vs T gates per qubit"/>
 </p>
 
 <p align="center">

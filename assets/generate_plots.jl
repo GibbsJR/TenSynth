@@ -243,34 +243,36 @@ function plot_imps_error_vs_rzz()
     outpath = joinpath(ASSETS_DIR, "imps_error_vs_rzz.png")
     savefig(p, outpath)
     println("  Saved: $outpath")
-    return trotter_errors, trotter_circuits, opt_errors, opt_circuits, trotter_steps, opt_depths
+    return trotter_errors, trotter_circuits, opt_errors, opt_circuits, trotter_steps, opt_depths, unit_cell
 end
 
 # ── Plot 4: iMPS Unitary Compilation — Error vs T Gates ──────────────────────
 
 function plot_imps_error_vs_tgates(trotter_errors, trotter_circuits,
                                     opt_errors, opt_circuits,
-                                    trotter_steps, opt_depths)
+                                    trotter_steps, opt_depths, unit_cell)
     epsilon = 1e-2
 
     println("  Counting T gates for Trotter circuits...")
-    trotter_t_gates = Int[]
+    trotter_t_gates = Float64[]
     for (i, circ) in enumerate(trotter_circuits)
         n_t = count_t_gates_imps(circ, epsilon)
-        push!(trotter_t_gates, n_t)
-        println("    n_steps=$(trotter_steps[i]): T gates = $n_t")
+        t_per_qubit = n_t / unit_cell
+        push!(trotter_t_gates, t_per_qubit)
+        println("    n_steps=$(trotter_steps[i]): T gates = $n_t ($(t_per_qubit)/qubit)")
     end
 
     println("  Counting T gates for optimized circuits...")
-    opt_t_gates = Int[]
+    opt_t_gates = Float64[]
     for (i, circ) in enumerate(opt_circuits)
         n_t = count_t_gates_imps(circ, epsilon)
-        push!(opt_t_gates, n_t)
-        println("    depth=$(opt_depths[i]): T gates = $n_t")
+        t_per_qubit = n_t / unit_cell
+        push!(opt_t_gates, t_per_qubit)
+        println("    depth=$(opt_depths[i]): T gates = $n_t ($(t_per_qubit)/qubit)")
     end
 
     p = plot(trotter_t_gates, trotter_errors,
-        xlabel="T gates",
+        xlabel="T gates per qubit",
         ylabel="Unitary error (avg. infidelity)",
         title="iMPS: Error vs T-Gate Cost",
         marker=:circle, linewidth=2.5, markersize=5,
@@ -303,11 +305,11 @@ plot_mps_fidelity_vs_tgates(fids, decomp_results)
 println()
 
 println("Plot 3/4: iMPS Unitary Compilation - Error vs RZZ per Bond")
-trotter_errs, trotter_circs, opt_errs, opt_circs, t_steps, o_depths = plot_imps_error_vs_rzz()
+trotter_errs, trotter_circs, opt_errs, opt_circs, t_steps, o_depths, uc = plot_imps_error_vs_rzz()
 println()
 
-println("Plot 4/4: iMPS Unitary Compilation - Error vs T Gates")
-plot_imps_error_vs_tgates(trotter_errs, trotter_circs, opt_errs, opt_circs, t_steps, o_depths)
+println("Plot 4/4: iMPS Unitary Compilation - Error vs T Gates per Qubit")
+plot_imps_error_vs_tgates(trotter_errs, trotter_circs, opt_errs, opt_circs, t_steps, o_depths, uc)
 println()
 
 println("Done! All plots saved to $ASSETS_DIR")
