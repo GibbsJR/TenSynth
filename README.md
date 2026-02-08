@@ -68,7 +68,7 @@ qasm = to_qasm(result)
 - **Infinite MPS** — ground state preparation and unitary compilation via iTEBD
 - **Hamiltonians** — TFIM, Heisenberg, XY, XXZ with 1st/2nd/4th-order Trotter decomposition
 - **Circuit topologies** — staircase and brickwork layouts with configurable depth
-- **Clifford+T synthesis** — optional GridSynth / TraSynth integration via PyCall
+- **Clifford+T synthesis** — optional GridSynth / Trasyn integration via PyCall
 
 ## Modules
 
