@@ -2,37 +2,44 @@
 
 **Compile quantum states and operators into quantum circuits using tensor networks.**
 
-TenSynth provides variational and analytical methods for synthesising quantum circuits from Matrix Product States (MPS), Matrix Product Operators (MPO), and infinite MPS (iMPS) representations. It targets near-term circuit compilation problems where entanglement structure determines circuit depth.
+- **Variational and analytical** circuit synthesis from Matrix Product States (MPS), Matrix Product Operators (MPO), and infinite MPS (iMPS)
+- **Targets both NISQ and fault-tolerant hardware** — native parameterized gates or Clifford+T decomposition
+- **Bridge classical and quantum simulation** — tensor networks efficiently capture quantum systems up to moderate entanglement; TenSynth maps these into compact circuits ready to upload to quantum hardware, extending simulations into high-entanglement regimes beyond the reach of classical methods
 
 ```mermaid
-graph LR
-    A["Quantum State\nor Operator"] --> B["Tensor Network\n(MPS / MPO / iMPS)"]
-    B --> C["TenSynth\nVariational Optimization"]
-    C --> D["Quantum Circuit\n(Rz + CNOT)"]
-    style C fill:#4a90d9,color:#fff
+graph TD
+    A["TN calculation produces target\nstate/unitary expressed as\nMPS / MPO / iMPS"]
+    A --> B["TenSynth learns efficient circuit\nrepresentation, prioritising low\nCNOT (NISQ) or T (Fault-Tolerant)\ngate count"]
+    B --> C["Circuit ready to upload to QC\nfor high-entanglement\nquantum simulation"]
+    style B fill:#4a90d9,color:#fff
 ```
 
 ## Showcase
 
-**States with more entanglement need deeper circuits — and TenSynth finds the optimal compilation.**
+**Compiling the near-critical TFIM ground state (67 qubits) into quantum circuits.**
 
 <p align="center">
-  <img src="assets/fidelity_vs_depth.png" width="420" alt="Fidelity vs circuit depth for states of varying entanglement"/>
+  <img src="assets/mps_fidelity_vs_layers.png" width="420" alt="MPS fidelity vs circuit layers"/>
   &nbsp;&nbsp;
-  <img src="assets/entropy_vs_depth.png" width="350" alt="Entanglement entropy predicts circuit depth"/>
+  <img src="assets/mps_fidelity_vs_tgates.png" width="420" alt="MPS fidelity vs T-gate count"/>
 </p>
 
 <p align="center">
-  <em>Left:</em> Circuit fidelity improves with depth; higher bond dimension (more entanglement) requires more layers.
-  <em>Right:</em> Maximum entanglement entropy directly predicts the number of layers needed for 99% fidelity.
+  <em>Left:</em> Fidelity of the compiled TFIM ground state (h=1.001, near the quantum critical point) improves with circuit depth.
+  <em>Right:</em> The same data plotted against total T-gate count after Clifford+T synthesis.
+</p>
+
+**Optimizing translational-invariant unitaries beyond Trotter.**
+
+<p align="center">
+  <img src="assets/imps_error_vs_rzz.png" width="420" alt="iMPS error vs RZZ gates per bond"/>
+  &nbsp;&nbsp;
+  <img src="assets/imps_error_vs_tgates.png" width="420" alt="iMPS error vs T-gate count"/>
 </p>
 
 <p align="center">
-  <img src="assets/method_comparison.png" width="420" alt="Iterative optimization vs analytical decomposition"/>
-</p>
-
-<p align="center">
-  <em>Iterative variational optimization consistently outperforms analytical SVD decomposition, especially at high bond dimension.</em>
+  <em>Left:</em> Variational optimization (red, initialized from Trotter) achieves lower unitary error than plain second-order Trotter circuits (blue) at the same circuit depth.
+  <em>Right:</em> After Clifford+T synthesis, the T-gate advantage of optimized circuits persists.
 </p>
 
 ## Quick Start
