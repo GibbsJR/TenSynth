@@ -8,9 +8,9 @@
 
 ```mermaid
 graph TD
-    A["TN calculation produces target\nstate/unitary expressed as\nMPS / MPO / iMPS"]
-    A --> B["TenSynth learns efficient circuit\nrepresentation, prioritising low\nCNOT (NISQ) or T (Fault-Tolerant)\ngate count"]
-    B --> C["Circuit ready to upload to QC\nfor high-entanglement\nquantum simulation"]
+    A["TN calculation produces target<br/>state/unitary expressed as<br/>MPS / MPO / iMPS"]
+    A --> B["TenSynth learns efficient circuit<br/>representation, prioritising low<br/>CNOT (NISQ) or T (Fault-Tolerant)<br/>gate count"]
+    B --> C["Circuit ready to upload to QC<br/>for high-entanglement<br/>quantum simulation"]
     style B fill:#4a90d9,color:#fff
 ```
 
